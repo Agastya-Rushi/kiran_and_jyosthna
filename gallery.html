@@ -1,66 +1,139 @@
 <!DOCTYPE html>
-<html lang="te">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>కిరణ్ & జ్యోష్ణ గ్యాలరీ</title>
+    <title>Kiran & Jyoshna Gallery</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Telugu:wght@400;700&family=Noto+Sans+Telugu:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Cormorant+Garamond:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #f5e6cc;
+            --secondary: #2b2a2a;
+            --accent: #d4a373;
+            --highlight: #e6b800;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Noto Sans Telugu', sans-serif;
-            background-color: #f9f5f0;
-            color: #2d2d2d;
-            line-height: 1.6;
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #f7f0e6 0%, #fdfdfd 100%);
+            color: var(--secondary);
+            overflow-x: hidden;
             position: relative;
         }
+
         h1, h2, h3 {
-            font-family: 'Noto Serif Telugu', serif;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
+
+        /* Navbar */
         .navbar {
-            background-color: #4a2c2a;
-            color: #f7e4bc;
+            background: linear-gradient(to bottom, rgba(43, 42, 42, 0.95), rgba(43, 42, 42, 0.85));
             position: fixed;
             width: 100%;
-            z-index: 30;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 50;
+            padding: 20px 0;
+            transition: all 0.5s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
+
+        .navbar.scrolled {
+            background: linear-gradient(to bottom, rgba(43, 42 masz, 42, 1), rgba(43, 42, 42, 0.95));
+            padding: 15px 0;
+        }
+
         .navbar a {
-            color: #f7e4bc;
+            color: var(--accent);
+            font-size: 1.2rem;
             font-weight: 500;
+            position: relative;
             transition: color 0.3s ease;
         }
+
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: var(--highlight);
+            transition: width 0.3s ease;
+        }
+
+        .navbar a:hover::after {
+            width: 100%;
+        }
+
         .navbar a:hover {
-            color: #fff;
+            color: var(--highlight);
         }
-        .navbar.scrolled {
-            background-color: #6b4e4e;
-        }
-        .gallery-img {
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-        .gallery-img:hover {
-            transform: scale(1.03);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
+
+        /* Gallery Section */
         .section {
-            padding: 80px 20px 60px;
+            padding: 120px 40px;
+            background: var(--primary);
             position: relative;
+            overflow: hidden;
+            border-top: 3px solid var(--accent);
+            border-bottom: 3px solid var(--accent);
         }
+
         .section::before {
             content: '';
             position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: url('images/jingle-bells.png') no-repeat;
-            background-size: contain;
-            opacity: 0.3;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(212, 163, 115, 0.3), transparent);
             z-index: 0;
+            animation: float 10s infinite ease-in-out;
         }
+
+        .gallery-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-img::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .gallery-img:hover::before {
+            opacity: 1;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.08) translateY(-10px);
+            box-shadow: 0 12px 40px rgba(212, 163, 115, 0.8);
+        }
+
+        /* Lightbox */
         #lightbox {
             display: none;
             position: fixed;
@@ -68,82 +141,108 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.95);
             justify-content: center;
             align-items: center;
-            z-index: 40;
+            z-index: 60;
+            animation: fadeIn 0.5s ease;
         }
+
         #lightbox img {
             max-width: 85%;
             max-height: 85%;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            box-shadow: 0 0 50px rgba(212, 163, 115, 0.8);
+            border: 8px solid var(--accent);
+            animation: zoomIn 0.5s ease;
         }
+
         #lightbox .close {
             position: absolute;
-            top: 15px;
-            right: 25px;
+            top: 30px;
+            right: 40px;
             color: #fff;
-            font-size: 2.5rem;
+            font-size: 4rem;
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
         }
+
         #lightbox .close:hover {
-            color: #f7e4bc;
+            color: var(--accent);
+            transform: rotate(90deg) scale(1.2);
         }
+
+        /* Animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes zoomIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(20px, 20px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* Media Queries */
         @media (max-width: 640px) {
             .gallery-img {
-                width: 100%;
+                height: 200px;
             }
+
             .navbar {
                 padding: 10px;
             }
+
             .navbar a {
                 font-size: 0.9rem;
             }
-            .section::before {
-                top: 10px;
-                right: 10px;
-                width: 40px;
-                height: 40px;
+
+            .section {
+                padding: 80px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar p-4">
+    <nav class="navbar p-6">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="text-xl md:text-2xl font-bold">కిరణ్ & జ్యోష్ణ గ్యాలరీ</div>
-            <div class="space-x-4 md:space-x-6">
-                <a href="index.html#home" class="hover:text-white">మొదటి పేజీ</a>
-                <a href="index.html#story" class="hover:text-white">మా కథ</a>
-                <a href="gallery.html" class="hover:text-white">గ్యాలరీ</a>
-                <a href="index.html#details" class="hover:text-white">వివరాలు</a>
+            <div class="text-2xl md:text-3xl font-bold">Kiran & Jyoshna Gallery</div>
+            <div class="space-x-6 md:space-x-8">
+                <a href="index.html#home" class="hover:text-white">Home</a>
+                <a href="index.html#story" class="hover:text-white">Our Story</a>
+                <a href="gallery.html" class="hover:text-white">Gallery</a>
+                <a href="index.html#details" class="hover:text-white">Details</a>
             </div>
         </div>
     </nav>
 
-    <section class="section bg-white">
+    <section class="section">
         <div class="container mx-auto text-center">
-            <h1 class="text-3xl md:text-4xl font-bold mb-10 text-4a2c2a">మా గ్యాలరీ</h1>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <img src="images/engagement/engagement-1.jpg" alt="ఎంగేజ్‌మెంట్ 1" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
-                <img src="images/engagement/engagement-2.jpg" alt="ఎంగేజ్‌మెంట్ 2" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
-                <img src="images/engagement/engagement-3.jpg" alt="ఎంగేజ్‌మెంట్ 3" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
-                <img src="images/haldi/haldi-1.jpg" alt="హల్దీ 1" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
-                <img src="images/haldi/haldi-2.jpg" alt="హల్దీ 2" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
-                <img src="images/haldi/haldi-3.jpg" alt="హల్దీ 3" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
-                <img src="images/marriage/marriage-1.jpg" alt="వివాహం 1" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
-                <img src="images/marriage/marriage-2.jpg" alt="వివాహం 2" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
-                <img src="images/marriage/marriage-3.jpg" alt="వివాహం 3" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
+            <h1 class="text-4xl md:text-5xl font-bold mb-12">Our Gallery</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <img src="images/engagement/engagement-1.jpg" alt="Engagement 1" class="gallery-img rounded-lg w-full h-72 object-cover">
+                <img src="images/engagement/engagement-2.jpg" alt="Engagement 2" class="gallery-img rounded-lg w-full h-72 object-cover">
+                <img src="images/engagement/engagement-3.jpg" alt="Engagement 3" class="gallery-img rounded-lg w-full h-72 object-cover">
+                <img src="images/haldi/haldi-1.jpg" alt="Haldi 1" class="gallery-img rounded-lg w-full h-72 object-cover">
+                <img src="images/haldi/haldi-2.jpg" alt="Haldi 2" class="gallery-img rounded-lg w-full h-72 object-cover">
+                <img src="images/haldi/haldi-3.jpg" alt="Haldi 3" class="gallery-img rounded-lg w-full h-72 object-cover">
+                <img src="images/marriage/marriage-1.jpg" alt="Marriage 1" class="gallery-img rounded-lg w-full h-72 object-cover">
+                <img src="images/marriage/marriage-2.jpg" alt="Marriage 2" class="gallery-img rounded-lg w-full h-72 object-cover">
+                <img src="images/marriage/marriage-3.jpg" alt="Marriage 3" class="gallery-img rounded-lg w-full h-72 object-cover">
             </div>
         </div>
     </section>
 
-    <footer class="bg-4a2c2a text-f7e4bc py-6 text-center">
+    <footer class="bg-4a2c2a text-d4a373 py-8 text-center">
         <div class="container mx-auto flex justify-center items-center">
-            <p class="text-base mr-2">© 2025 కిరణ్ & జ్యోష్ణ. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి.</p>
-            <span style="font-size: 1.5rem; color: #f7e4bc;">✝</span>
+            <p class="text-lg mr-3">© 2025 Kiran & Jyoshna. All Rights Reserved.</p>
+            <span style="font-size: 1.8rem; color: #d4a373;">✝</span>
         </div>
     </footer>
 
@@ -184,5 +283,5 @@
             }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'932bc8a5ae2dbf98',t:'MTc0NTA1OTIyNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
