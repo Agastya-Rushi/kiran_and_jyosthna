@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="te">
 <head>
     <meta charset="UTF-8">
@@ -48,37 +9,43 @@
     <style>
         body {
             font-family: 'Noto Sans Telugu', sans-serif;
-            background-color: #f8f1e9;
-            color: #1a202c;
+            background-color: #f9f5f0;
+            color: #2d2d2d;
+            line-height: 1.6;
         }
         h1, h2, h3 {
             font-family: 'Noto Serif Telugu', serif;
         }
         .navbar {
-            background-color: #1a202c;
-            color: #d4af37;
+            background-color: #4a2c2a;
+            color: #f7e4bc;
             position: fixed;
             width: 100%;
-            z-index: 20;
-            transition: all 0.3s ease;
+            z-index: 30;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
         .navbar a {
-            color: #d4af37;
+            color: #f7e4bc;
             font-weight: 500;
+            transition: color 0.3s ease;
         }
         .navbar a:hover {
-            color: #f8f1e9;
+            color: #fff;
         }
         .navbar.scrolled {
-            background-color: #2d3748;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            background-color: #6b4e4e;
         }
         .gallery-img {
             transition: transform 0.3s ease;
             cursor: pointer;
+            border-radius: 8px;
         }
         .gallery-img:hover {
-            transform: scale(1.05);
+            transform: scale(1.03);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .section {
+            padding: 80px 20px 60px;
         }
         #lightbox {
             display: none;
@@ -87,72 +54,77 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.85);
             justify-content: center;
             align-items: center;
-            z-index: 30;
+            z-index: 40;
         }
         #lightbox img {
-            max-width: 90%;
-            max-height: 90%;
-            border-radius: 8px;
+            max-width: 85%;
+            max-height: 85%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         }
         #lightbox .close {
             position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 2rem;
+            top: 15px;
+            right: 25px;
+            color: #fff;
+            font-size: 2.5rem;
             cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        #lightbox .close:hover {
+            color: #f7e4bc;
+        }
+        @media (max-width: 640px) {
+            .gallery-img {
+                width: 100%;
+            }
+            .navbar {
+                padding: 10px;
+            }
+            .navbar a {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar fixed w-full z-20 top-0">
-        <div class="container mx-auto flex justify-between items-center py-4 px-6">
-            <div class="text-2xl font-bold">కిరణ్ & జ్యోష్ణ గ్యాలరీ</div>
-            <div class="space-x-6">
-                <a href="index.html#home" class="hover:text-ivory">మొదటి పేజీ</a>
-                <a href="index.html#story" class="hover:text-ivory">మా కథ</a>
-                <a href="gallery.html" class="hover:text-ivory">గ్యాలరీ</a>
-                <a href="index.html#details" class="hover:text-ivory">వివరాలు</a>
+    <nav class="navbar p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-xl md:text-2xl font-bold">కిరణ్ & జ్యోష్ణ గ్యాలరీ</div>
+            <div class="space-x-4 md:space-x-6">
+                <a href="index.html#home" class="hover:text-white">మొదటి పేజీ</a>
+                <a href="index.html#story" class="hover:text-white">మా కథ</a>
+                <a href="gallery.html" class="hover:text-white">గ్యాలరీ</a>
+                <a href="index.html#details" class="hover:text-white">వివరాలు</a>
             </div>
-        </nav>
+        </div>
+    </nav>
 
-    <section class="py-24 bg-ivory">
-        <div class="container mx-auto px-6">
-            <h1 class="text-5xl font-bold text-center mb-12 text-deep-blue">మా గ్యాలరీ</h1>
-            <div class="mb-12">
-                <h2 class="text-3xl font-semibold mb-6 text-deep-blue">ఎంగేజ్‌మెంట్</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    <img src="images/engagement/engagement-1.jpg" alt="ఎంగేజ్‌మెంట్ 1" class="gallery-img rounded-lg shadow-lg">
-                    <img src="images/engagement/engagement-2.jpg" alt="ఎంగేజ్‌మెంట్ 2" class="gallery-img rounded-lg shadow-lg">
-                    <img src="images/engagement/engagement-3.jpg" alt="ఎంగేజ్‌మెంట్ 3" class="gallery-img rounded-lg shadow-lg">
-                </div>
-            </div>
-            <div class="mb-12">
-                <h2 class="text-3xl font-semibold mb-6 text-deep-blue">హల్దీ</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    <img src="images/haldi/haldi-1.jpg" alt="హల్దీ 1" class="gallery-img rounded-lg shadow-lg">
-                    <img src="images/haldi/haldi-2.jpg" alt="హల్దీ 2" class="gallery-img rounded-lg shadow-lg">
-                    <img src="images/haldi/haldi-3.jpg" alt="హల్దీ 3" class="gallery-img rounded-lg shadow-lg">
-                </div>
-            </div>
-            <div class="mb-12">
-                <h2 class="text-3xl font-semibold mb-6 text-deep-blue">వివాహం</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    <img src="images/marriage/marriage-1.jpg" alt="వివాహం 1" class="gallery-img rounded-lg shadow-lg">
-                    <img src="images/marriage/marriage-2.jpg" alt="వివాహం 2" class="gallery-img rounded-lg shadow-lg">
-                    <img src="images/marriage/marriage-3.jpg" alt="వివాహం 3" class="gallery-img rounded-lg shadow-lg">
-                </div>
+    <section class="section bg-white">
+        <div class="container mx-auto text-center">
+            <h1 class="text-3xl md:text-4xl font-bold mb-10 text-4a2c2a">మా గ్యాలరీ</h1>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <img src="images/engagement/engagement-1.jpg" alt="ఎంగేజ్‌మెంట్ 1" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
+                <img src="images/engagement/engagement-2.jpg" alt="ఎంగేజ్‌మెంట్ 2" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
+                <img src="images/engagement/engagement-3.jpg" alt="ఎంగేజ్‌మెంట్ 3" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
+                <img src="images/haldi/haldi-1.jpg" alt="హల్దీ 1" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
+                <img src="images/haldi/haldi-2.jpg" alt="హల్దీ 2" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
+                <img src="images/haldi/haldi-3.jpg" alt="హల్దీ 3" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
+                <img src="images/marriage/marriage-1.jpg" alt="వివాహం 1" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
+                <img src="images/marriage/marriage-2.jpg" alt="వివాహం 2" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
+                <img src="images/marriage/marriage-3.jpg" alt="వివాహం 3" class="gallery-img rounded-lg shadow-md w-full h-64 object-cover">
             </div>
         </div>
     </section>
 
-    <footer class="bg-deep-blue text-ivory py-8">
-        <div class="container mx-auto px-6 text-center">
-            <p>© 2025 కిరణ్ & జ్యోష్ణ. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి.</p>
-        </footer>
+    <footer class="bg-4a2c2a text-f7e4bc py-6 text-center">
+        <div class="container mx-auto">
+            <p class="text-base">© 2025 కిరణ్ & జ్యోష్ణ. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి.</p>
+        </div>
+    </footer>
 
     <div id="lightbox">
         <span class="close">×</span>
