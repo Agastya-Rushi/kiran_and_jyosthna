@@ -1,69 +1,76 @@
 <!DOCTYPE html>
-<html lang="te">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>కిరణ్ & జ్యోష్ణ వివాహం</title>
+    <title>Kiran & Jyoshna Wedding</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Telugu:wght@400;700&family=Noto+Sans+Telugu:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Noto Sans Telugu', sans-serif;
-            background-color: #f9f5f0;
-            color: #2d2d2d;
-            line-height: 1.6;
+            font-family: 'Lora', serif;
+            background-color: #f5ece4;
+            color: #2d1b1b;
+            line-height: 1.7;
             position: relative;
+            overflow-x: hidden;
         }
         h1, h2, h3 {
-            font-family: 'Noto Serif Telugu', serif;
+            font-family: 'Playfair Display', serif;
+            letter-spacing: 1.5px;
         }
         .hero-section {
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('images/background-hero.jpg');
+            background: linear-gradient(rgba(45, 27, 27, 0.6), rgba(45, 27, 27, 0.6)), url('images/background-hero.jpg');
             background-size: cover;
             background-position: center;
-            height: 80vh;
+            height: 85vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            color: #ffffff;
+            color: #fff9e6;
             position: relative;
             overflow: hidden;
+            border-bottom: 2px solid #d4a373;
         }
         .cross-section {
             width: 100%;
-            padding: 20px 0;
+            padding: 25px 0;
             position: absolute;
             top: 15%;
             left: 0;
             z-index: 5;
+            text-shadow: 0 0 10px rgba(212, 163, 115, 0.7);
         }
         .cross {
-            font-size: 80px;
-            color: #f7e4bc;
-            opacity: 0.8;
+            font-size: 90px;
+            color: #d4a373;
+            opacity: 0.9;
+            text-shadow: 0 0 5px #fff9e6;
         }
         .hero-content {
             position: relative;
             z-index: 10;
-            padding-top: 80px;
+            padding-top: 90px;
         }
         .navbar {
             background-color: #4a2c2a;
-            color: #f7e4bc;
+            color: #d4a373;
             position: fixed;
             width: 100%;
             z-index: 30;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            font-weight: 600;
+            letter-spacing: 1px;
         }
         .navbar a {
-            color: #f7e4bc;
-            font-weight: 500;
-            transition: color 0.3s ease;
+            color: #d4a373;
+            transition: color 0.4s ease, text-shadow 0.4s ease;
         }
         .navbar a:hover {
-            color: #fff;
+            color: #fff9e6;
+            text-shadow: 0 0 10px #d4a373;
         }
         .navbar.scrolled {
             background-color: #6b4e4e;
@@ -71,27 +78,34 @@
         .bride-groom {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
+            gap: 30px;
+            margin: 30px 0;
         }
         .bride-groom img {
-            width: 180px;
-            border: 6px solid #f7e4bc;
+            width: 200px;
+            border: 8px solid #d4a373;
             border-radius: 50%;
-            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
         .bride-groom img:hover {
-            transform: scale(1.1);
+            transform: scale(1.15);
+            box-shadow: 0 10px 25px rgba(212, 163, 115, 0.5);
         }
         .section {
-            padding: 60px 20px;
+            padding: 80px 30px;
             position: relative;
+            background: #fff;
+            border-top: 1px solid #e8d9c7;
+            border-bottom: 1px solid #e8d9c7;
         }
         .countdown {
-            background: #ffffff;
-            color: #000000;
-            padding: 1rem;
-            border-radius: 8px;
+            background: #fff9e6;
+            color: #4a2c2a;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: inset 0 0 10px rgba(212, 163, 115, 0.2);
+            font-weight: 700;
         }
         #lightbox {
             display: none;
@@ -100,57 +114,75 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             justify-content: center;
             align-items: center;
             z-index: 40;
         }
         #lightbox img {
-            max-width: 85%;
-            max-height: 85%;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(212, 163, 115, 0.5);
+            border: 5px solid #d4a373;
         }
         #lightbox .close {
             position: absolute;
-            top: 15px;
-            right: 25px;
-            color: #fff;
-            font-size: 2.5rem;
+            top: 20px;
+            right: 30px;
+            color: #fff9e6;
+            font-size: 3rem;
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: color 0.4s ease, transform 0.4s ease;
         }
         #lightbox .close:hover {
-            color: #f7e4bc;
+            color: #d4a373;
+            transform: scale(1.2);
         }
         .map-container {
-            height: 400px;
-            margin: 20px 0;
+            height: 450px;
+            margin: 30px 0;
+            border: 2px solid #d4a373;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         }
         .highlight-button {
-            border: 2px solid #4a2c2a;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            border: 3px solid #4a2c2a;
+            background: #fff9e6;
+            color: #4a2c2a;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
         }
         .highlight-button:hover {
-            background-color: #4a2c2a;
-            color: #f7e4bc;
+            background: #4a2c2a;
+            color: #fff9e6;
+            box-shadow: 0 5px 15px rgba(212, 163, 115, 0.5);
+            transform: translateY(-2px);
         }
         .couple-images {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
+            gap: 30px;
+            margin: 30px 0;
         }
         .couple-images img {
-            width: 200px;
-            height: 200px;
+            width: 220px;
+            height: 220px;
             object-fit: cover;
-            border: 4px solid #f7e4bc;
-            border-radius: 10px;
-            transition: transform 0.3s ease;
+            border: 6px solid #d4a373;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
         .couple-images img:hover {
-            transform: scale(1.05);
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(212, 163, 115, 0.6);
         }
         @media (max-width: 640px) {
             .bride-groom img {
@@ -179,18 +211,22 @@
                 width: 120px;
                 height: 120px;
             }
+            .highlight-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
-    <nav class="navbar p-4">
+    <nav class="navbar p-6">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="text-xl md:text-2xl font-bold">కిరణ్ & జ్యోష్ణ</div>
-            <div class="space-x-4 md:space-x-6">
-                <a href="#home" class="hover:text-white">మొదటి పేజీ</a>
-                <a href="#story" class="hover:text-white">మా కథ</a>
-                <a href="gallery.html" class="hover:text-white">గ్యాలరీ</a>
-                <a href="#details" class="hover:text-white">వివరాలు</a>
+            <div class="text-2xl md:text-3xl font-bold">Kiran & Jyoshna</div>
+            <div class="space-x-6 md:space-x-8">
+                <a href="#home" class="hover:text-white">Home</a>
+                <a href="#story" class="hover:text-white">Our Story</a>
+                <a href="gallery.html" class="hover:text-white">Gallery</a>
+                <a href="#details" class="hover:text-white">Details</a>
             </div>
         </div>
     </nav>
@@ -200,84 +236,84 @@
             <span class="cross">✝</span>
         </div>
         <div class="hero-content">
-            <h1 class="text-4xl md:text-6xl font-bold mb-4">కిరణ్ & జ్యోష్ణ వివాహం</h1>
-            <p class="text-lg md:text-xl mb-6">30 ఏప్రిల్ 2025 | వెంకటాద్రి గార్డెన్స్, కాతేరు</p>
-            <div class="countdown text-lg md:text-xl mb-6" id="countdown-timer"></div>
-            <a href="#details" class="bg-f7e4bc text-4a2c2a px-6 py-3 rounded-full font-semibold hover:bg-white hover:text-4a2c2a">వివరాలు</a>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">Kiran & Jyoshna Wedding</h1>
+            <p class="text-xl md:text-2xl mb-8">April 30, 2025 | Venkatadri Gardens, Kateru</p>
+            <div class="countdown text-xl md:text-2xl mb-8" id="countdown-timer"></div>
+            <a href="#details" class="bg-d4a373 text-4a2c2a px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-4a2c2a transition duration-300">Details</a>
         </div>
     </section>
 
-    <section id="story" class="section bg-white">
-        <div class="container mx-auto text-center max-w-4xl">
-            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-4a2c2a">పరిశుద్ధ వివాహ ఆహ్వానం</h2>
-            <p class="text-base md:text-lg mb-4">
-                “అయినను యేసు వారితో ఇట్లనెను, దేవుని రాజ్యం ఆ రాజ్యమునకు లేకుండా రాదు; ఇది యెహోవా ఏర్పాటు చేసిన దినము, దీనియందు మనము ఉత్సహించి సంతోషించెదము.” - కీర్తనలు 118:24<br><br>
-                కుంచే వీరవెంకట రమణ, శ్రీమతి ఝాన్సీ రాణి దంపతులు వ్రాయు శుభలేఖార్థములు. మా జ్యేష్ఠ కుమారుడు<br>
-                <strong>వరుడు:</strong> క్రాంతి కిరణ్ (B.Tech.)<br>
-                <strong>వధువు:</strong> జ్యోష్ణ (B.Tech.)<br>
-                (విశాఖపట్టణం, మర్రిపాలెం వాస్తవ్యులు శ్రీ వురజాన పాపారావు (జాన్), శ్రీమతి స్వర్ణ కుమారి దంపతుల జ్యేష్ఠ కుమార్తె)<br>
-                ఇచ్చి పరిశుద్ధ వివాహము జరిపించుటకు పెద్దలచే నిశ్చయించడమైనది.
+    <section id="story" class="section">
+        <div class="container mx-auto text-center max-w-5xl">
+            <h2 class="text-4xl md:text-5xl font-bold mb-8 text-4a2c2a">Sacred Wedding Invitation</h2>
+            <p class="text-lg md:text-xl mb-6">
+                “This is the day that the Lord has made; let us rejoice and be glad in it.” - Psalm 118:24<br><br>
+                With great joy, Mr. Veera Venkata Ramana Kunche and Mrs. Jhansi Rani extend this gracious invitation. Our eldest son,<br>
+                <strong>Groom:</strong> Kranti Kiran (B.Tech.)<br>
+                <strong>Bride:</strong> Jyoshna (B.Tech.)<br>
+                (Daughter of Mr. Urajan Papa Rao (John) and Mrs. Swarna Kumari from Visakhapatnam, Marripalem)<br>
+                is to be united in holy matrimony as decided by our elders.
             </p>
             <div class="bride-groom">
-                <img src="images/bride.jpg" alt="వరుడు">
-                <img src="images/groom.jpg" alt="వధువు">
+                <img src="images/bride.jpg" alt="Groom">
+                <img src="images/groom.jpg" alt="Bride">
             </div>
         </div>
     </section>
 
-    <section id="details" class="section bg-f9f5f0">
+    <section id="details" class="section">
         <div class="container mx-auto text-center">
-            <h2 class="text-3xl md:text-4xl font-bold mb-10 text-4a2c2a">వివరాలు</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                <div class="p-6 bg-white rounded-lg shadow-md">
-                    <h3 class="text-xl md:text-2xl font-semibold mb-4 text-4a2c2a">వివాహ సమయం</h3>
-                    <p class="text-base">ది. 30-04-2025 బుధవారం ఉదయం 10:00 గంటలకు</p>
+            <h2 class="text-4xl md:text-5xl font-bold mb-12 text-4a2c2a">Event Details</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+                <div class="p-8 bg-white rounded-xl shadow-lg">
+                    <h3 class="text-2xl md:text-3xl font-semibold mb-5 text-4a2c2a">Wedding Time</h3>
+                    <p class="text-lg">Wednesday, April 30, 2025, 10:00 AM</p>
                 </div>
-                <div class="p-6 bg-white rounded-lg shadow-md">
-                    <h3 class="text-xl md:text-2xl font-semibold mb-4 text-4a2c2a">వివాహ వేదిక</h3>
-                    <p class="text-base">వెంకటాద్రి గార్డెన్స్, కాతేరు, ఎ/సి కన్వెన్షన్ హాలు<br>4వ బ్రిడ్జి దగ్గర</p>
+                <div class="p-8 bg-white rounded-xl shadow-lg">
+                    <h3 class="text-2xl md:text-3xl font-semibold mb-5 text-4a2c2a">Venue</h3>
+                    <p class="text-lg">Venkatadri Gardens, Kateru, A/C Convention Hall<br>Near 4th Bridge</p>
                 </div>
-                <div class="p-6 bg-white rounded-lg shadow-md">
-                    <h3 class="text-xl md:text-2xl font-semibold mb-4 text-4a2c2a">వివాహకర్త</h3>
-                    <p class="text-base">రెవ. వారా కృపావరం గారు, B.A., B.Th., B.D., సెయింట్ లూక్స్ లూథరన్ సంఘ కాపరి<br>శ్రీమతి ఈండ్రి హెజల్ జెమిమా గారు, సెయింట్ లూక్స్ లూథరన్ సంఘ సి.ఆర్.</p>
+                <div class="p-8 bg-white rounded-xl shadow-lg">
+                    <h3 class="text-2xl md:text-3xl font-semibold mb-5 text-4a2c2a">Officiants</h3>
+                    <p class="text-lg">Rev. Vara Kripavaram, B.A., B.Th., B.D., Saint Luke’s Lutheran Church Pastor<br>Mrs. Eindri Hazel Jemima, Saint Luke’s Lutheran Church C.R.</p>
                 </div>
-                <div class="p-6 bg-white rounded-lg shadow-md">
-                    <h3 class="text-xl md:text-2xl font-semibold mb-4 text-4a2c2a">విందు</h3>
-                    <p class="text-base">ది. 30-04-2025 బుధవారం మధ్యాహ్నం 12 గంటల నుండి వివాహ వేదిక వద్ద</p>
+                <div class="p-8 bg-white rounded-xl shadow-lg">
+                    <h3 class="text-2xl md:text-3xl font-semibold mb-5 text-4a2c2a">Reception</h3>
+                    <p class="text-lg">Wednesday, April 30, 2025, 12:00 PM onwards at the venue</p>
                 </div>
-                <div class="p-6 bg-white rounded-lg shadow-md md:col-span-2">
-                    <h3 class="text-xl md:text-2xl font-semibold mb-4 text-4a2c2a">అభిలాష</h3>
-                    <p class="text-base">మనమందరం కుటుంబ సమేతంగా విచ్చేసి, ఈ పరిశుద్ధ వివాహంలో దేవుని ఆశీర్వాదాన్ని ప్రార్థించి, నూతన వధూవరులను ఆశీర్వదించుటకు ఆహ్వానిస్తున్నాము.</p>
+                <div class="p-8 bg-white rounded-xl md:col-span-2">
+                    <h3 class="text-2xl md:text-3xl font-semibold mb-5 text-4a2c2a">Wishes</h3>
+                    <p class="text-lg">We cordially invite you and your family to join us in this sacred union, pray for divine blessings, and wish the newlyweds well.</p>
                 </div>
-                <div class="p-6 bg-white rounded-lg shadow-md md:col-span-2">
-                    <h3 class="text-xl md:text-2xl font-semibold mb-4 text-4a2c2a">ఆగమనాభిలాషులు</h3>
-                    <p class="text-base">కుంచే ముసలయ్య<br>శ్రీమతి నాగమ్మ<br>తలారి రంగారావు (లేటు)<br>శ్రీమతి కాంతమణి</p>
+                <div class="p-8 bg-white rounded-xl md:col-span-2">
+                    <h3 class="text-2xl md:text-3xl font-semibold mb-5 text-4a2c2a">In Loving Memory</h3>
+                    <p class="text-lg">Kunche Musalayya<br>Mrs. Nagamma<br>Talari Rangarao (Late)<br>Mrs. Kantamani</p>
                 </div>
-                <div class="p-6 bg-white rounded-lg shadow-md md:col-span-2">
-                    <h3 class="text-xl md:text-2xl font-semibold mb-4 text-4a2c2a">ప్రేమతో ఆహ్వానించువారు</h3>
-                    <p class="text-base">కుంచే వీర వెంకట రమణ<br>శ్రీమతి ఝాన్సీ రాణి<br>బంధుమిత్రుల అభినందనలతో...</p>
+                <div class="p-8 bg-white rounded-xl md:col-span-2">
+                    <h3 class="text-2xl md:text-3xl font-semibold mb-5 text-4a2c2a">With Love</h3>
+                    <p class="text-lg">Kunche Veera Venkata Ramana<br>Mrs. Jhansi Rani<br>With blessings from family and friends...</p>
                 </div>
             </div>
-            <div class="mt-10">
-                <h3 class="text-2xl md:text-3xl font-semibold mb-4 text-4a2c2a">వేదిక మ్యాప్</h3>
+            <div class="mt-12">
+                <h3 class="text-3xl md:text-4xl font-bold mb-6 text-4a2c2a">Venue Map</h3>
                 <div class="map-container">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3814.4669106260058!2d81.77138737500218!3d17.04979918378089!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a37a6b5d4f15adb%3A0x231773ab79ace91!2sVenkatadri%20Gardens!5e0!3m2!1sen!2sin!4v1745060987794!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
-                <a href="https://www.google.com/maps/place/Venkatadri+Gardens/@17.0497992,81.7713874,15z/data=!4m6!3m5!1s0x3a37a6b5d4f15adb:0x231773ab79ace91!8m2!3d17.0497992!4d81.7713874!16s%2Fg%2F11c5v5z8q9?entry=ttu" target="_blank" class="mt-4 inline-block bg-f7e4bc text-4a2c2a px-6 py-3 rounded-full font-semibold highlight-button hover:bg-white hover:text-4a2c2a">నన్ను అక్కడికి తీసుకెళ్ళు</a>
+                <a href="https://www.google.com/maps/place/Venkatadri+Gardens/@17.0497992,81.7713874,15z/data=!4m6!3m5!1s0x3a37a6b5d4f15adb:0x231773ab79ace91!8m2!3d17.0497992!4d81.7713874!16s%2Fg%2F11c5v5z8q9?entry=ttu" target="_blank" class="mt-6 inline-block highlight-button">Take Me There</a>
                 <div class="couple-images">
-                    <img src="images/couple-1.jpg" alt="కపుల్ 1">
-                    <img src="images/couple-2.jpg" alt="కపుల్ 2">
-                    <img src="images/couple-3.jpg" alt="కపుల్ 3">
+                    <img src="images/couple-1.jpg" alt="Couple 1">
+                    <img src="images/couple-2.jpg" alt="Couple 2">
+                    <img src="images/couple-3.jpg" alt="Couple 3">
                 </div>
-                <a href="gallery.html" class="mt-4 inline-block bg-f7e4bc text-4a2c2a px-6 py-3 rounded-full font-semibold highlight-button hover:bg-white hover:text-4a2c2a">గ్యాలరీకి వెళ్ళు</a>
+                <a href="gallery.html" class="mt-6 inline-block highlight-button">View Gallery</a>
             </div>
         </div>
     </section>
 
-    <footer class="bg-4a2c2a text-f7e4bc py-6 text-center">
+    <footer class="bg-4a2c2a text-d4a373 py-8 text-center">
         <div class="container mx-auto flex justify-center items-center">
-            <p class="text-base mr-2">© 2025 కిరణ్ & జ్యోష్ణ. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి.</p>
-            <span style="font-size: 1.5rem; color: #f7e4bc;">✝</span>
+            <p class="text-lg mr-3">© 2025 Kiran & Jyoshna. All Rights Reserved.</p>
+            <span style="font-size: 1.8rem; color: #d4a373;">✝</span>
         </div>
     </footer>
 
@@ -298,10 +334,10 @@
             const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
             document.getElementById('countdown-timer').innerHTML = 
-                `${days} రోజులు ${hours} గంటలు ${minutes} నిమిషాలు ${seconds} సెకన్లు`;
+                `${days} Days ${hours} Hours ${minutes} Minutes ${seconds} Seconds`;
 
             if (distance < 0) {
-                document.getElementById('countdown-timer').innerHTML = 'వివాహం ప్రారంభమైంది!';
+                document.getElementById('countdown-timer').innerHTML = 'Wedding Has Begun!';
             }
         }
         setInterval(countdown, 1000);
