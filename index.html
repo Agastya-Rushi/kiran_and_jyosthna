@@ -1,0 +1,312 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="te">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>కిరణ్ & జ్యోష్ణ వివాహం</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Telugu:wght@400;700&family=Noto+Sans+Telugu:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Telugu', sans-serif;
+            background-color: #f8f1e9;
+            color: #1a202c;
+        }
+        h1, h2, h3 {
+            font-family: 'Noto Serif Telugu', serif;
+        }
+        .hero-section {
+            background-image: url('images/background-hero.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .navbar {
+            background-color: #1a202c;
+            color: #d4af37;
+            position: fixed;
+            width: 100%;
+            z-index: 20;
+            transition: all 0.3s ease;
+        }
+        .navbar a {
+            color: #d4af37;
+            font-weight: 500;
+        }
+        .navbar a:hover {
+            color: #f8f1e9;
+        }
+        .navbar.scrolled {
+            background-color: #2d3748;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .bride-groom img {
+            width: 200px;
+            border: 5px solid #d4af37;
+            border-radius: 50%;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+        .bride-groom img:hover {
+            transform: scale(1.05);
+        }
+        .details {
+            line-height: 1.6;
+        }
+        .map-container {
+            height: 400px;
+            width: 100%;
+        }
+        .countdown {
+            background: rgba(255, 255, 255, 0.9);
+            color: #1a202c;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+        #lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 30;
+        }
+        #lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 8px;
+        }
+        #lightbox .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        @media (max-width: 600px) {
+            .bride-groom img {
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar fixed w-full z-20 top-0">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <div class="text-2xl font-bold">కిరణ్ & జ్యోష్ణ</div>
+            <div class="space-x-6">
+                <a href="#home" class="hover:text-ivory">మొదటి పేజీ</a>
+                <a href="#story" class="hover:text-ivory">మా కథ</a>
+                <a href="gallery.html" class="hover:text-ivory">గ్యాలరీ</a>
+                <a href="#details" class="hover:text-ivory">వివరాలు</a>
+            </div>
+        </nav>
+
+    <section id="home" class="hero-section">
+        <div class="relative z-10">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">కిరణ్ & జ్యోష్ణ వివాహం</h1>
+            <p class="text-xl md:text-2xl mb-6">30 ఏప్రిల్ 2025 | వెంకటాద్రి గార్డెన్స్</p>
+            <div class="countdown text-lg md:text-xl mb-6" id="countdown-timer"></div>
+            <a href="#details" class="bg-gold text-deep-blue px-6 py-3 rounded-full hover:bg-ivory hover:text-deep-blue">వివరాలు</a>
+        </div>
+    </section>
+
+    <section id="story" class="py-16 bg-ivory">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8 text-deep-blue">పరిశుద్ధ వివాహ ఆహ్వానం</h2>
+            <p class="text-lg max-w-2xl mx-auto mb-6">
+                ఇది యెహోవా ఏర్పాటు చేసిన దినము దీనియందు మనము ఉత్సహించి సంతోషించెదము. - కీర్తనలు 118:24<br><br>
+                కుంచే వీరవెంకట రమణ, శ్రీమతి ఝాన్సీ రాణి దంపతులు వ్రాయు శుభలేఖార్థములు. మా జ్యేష్ఠ కుమారుడు<br>
+                <strong>వరుడు:</strong> క్రాంతి కిరణ్ (B.Tech.)<br>
+                <strong>వధువు:</strong> జ్యోష్ణ (B.Tech.)<br>
+                (విశాఖపట్టణం, మర్రిపాలెం వాస్తవ్యులు శ్రీ వురజాన పాపారావు (జాన్), శ్రీమతి స్వర్ణ కుమారి దంపతుల జ్యేష్ఠ కుమార్తె)<br>
+                ఇచ్చి పరిశుద్ధ వివాహము జరిపించుటకు పెద్దలచే నిశ్చయించడమైనది.
+            </p>
+            <div class="bride-groom flex justify-center">
+                <img src="https://via.placeholder.com/200?text=Groom" alt="వరుడు">
+                <img src="https://via.placeholder.com/200?text=Bride" alt="వధువు">
+            </div>
+        </div>
+    </section>
+
+    <section id="time" class="py-16 bg-deep-blue text-ivory">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8">వివాహ సమయం</h2>
+            <p class="text-lg">ది. 30-04-2025 బుధవారం ఉదయం 10:00 గంటలకు</p>
+        </div>
+    </section>
+
+    <section id="venue" class="py-16 bg-ivory">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8 text-deep-blue">వివాహ వేదిక</h2>
+            <p class="text-lg">వెంకటాద్రి గార్డెన్స్, ఎ/సి కన్వెన్షన్ హాలు<br>4వ బ్రిడ్జి దగ్గర, కాతేరు</p>
+        </div>
+    </section>
+
+    <section id="officiant" class="py-16 bg-deep-blue text-ivory">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8">వివాహకర్త</h2>
+            <p class="text-lg">రెవ. వారా కృపావరం గారు, B.A., B.Th., B.D., సెయింట్ లూక్స్ లూథరన్ సంఘ కాపరి<br>శ్రీమతి ఈండ్రి హెజల్ జెమిమా గారు, సెయింట్ లూక్స్ లూథరన్ సంఘ సి.ఆర్.</p>
+        </div>
+    </section>
+
+    <section id="reception" class="py-16 bg-ivory">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8 text-deep-blue">విందు</h2>
+            <p class="text-lg">ది. 30-04-2025 బుధవారం మధ్యాహ్నం 12 గంటల నుండి వివాహ వేదిక వద్ద</p>
+        </div>
+    </section>
+
+    <section id="blessing" class="py-16 bg-deep-blue text-ivory">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8">అభిలాష</h2>
+            <p class="text-lg">ఈ పరిశుద్ధ వివాహమునకు ఆత్మీయులైన తామెల్లరూ కుటుంబ సమేతంగా విచ్చేసి నూతన వధూవరులను ఆశీర్వదించ ప్రార్థన.</p>
+        </div>
+    </section>
+
+    <section id="guests" class="py-16 bg-ivory">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8 text-deep-blue">ఆగమనాభిలాషులు</h2>
+            <p class="text-lg">కుంచే ముసలయ్య<br>శ్రీమతి నాగమ్మ<br>తలారి రంగారావు (లేటు)<br>శ్రీమతి కాంతమణి</p>
+        </div>
+    </section>
+
+    <section id="hosts" class="py-16 bg-deep-blue text-ivory">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-8">ప్రేమతో ఆహ్వానించువారు</h2>
+            <p class="text-lg">కుంచే వీర వెంకట రమణ<br>శ్రీమతి ఝాన్సీ రాణి<br>బంధుమిత్రుల అభినందనలతో...</p>
+        </div>
+    </section>
+
+    <footer class="bg-deep-blue text-ivory py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>© 2025 కిరణ్ & జ్యోష్ణ. అన్ని హక్కులు రిజర్వ్ చేయబడ్డాయి.</p>
+        </div>
+    </footer>
+
+    <div id="lightbox">
+        <span class="close">×</span>
+        <img id="lightbox-img" src="" alt="Lightbox Image">
+    </div>
+
+    <script>
+        function countdown() {
+            const weddingDate = new Date('April 30, 2025 10:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = weddingDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown-timer').innerHTML = 
+                `${days} రోజులు ${hours} గంటలు ${minutes} నిమిషాలు ${seconds} సెకన్లు`;
+
+            if (distance < 0) {
+                document.getElementById('countdown-timer').innerHTML = 'వివాహం ప్రారంభమైంది!';
+            }
+        }
+        setInterval(countdown, 1000);
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const galleryImages = document.querySelectorAll('.gallery-img');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const closeBtn = document.querySelector('.close');
+
+        galleryImages.forEach(img => {
+            img.addEventListener('click', () => {
+                lightboxImg.src = img.src;
+                lightbox.style.display = 'flex';
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
